@@ -3,6 +3,7 @@
 ## Requirements
 
 To run the you'll need: AWS permissions and keys, and a DynamoDB table with `Email(S): PartitionKey` and `Lastname(S): SortKey`
+
 ## Setup
 
 ### Build it yourself
