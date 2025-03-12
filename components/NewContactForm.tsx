@@ -4,6 +4,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "./InputField";
+import { saveContact } from "@/services/contactService";
+import { useState } from "react";
+import clsx from "clsx";
 
 
 const formSchema = z.object({
@@ -53,11 +56,32 @@ export function NewContactForm() {
         resolver: zodResolver(formSchema)
     })
 
-    const onSubmit = (data: FormData) => {
-        console.log(JSON.stringify(data))
+    const onSubmit = async (data: FormData) => {
+        setLoading(true);
+        const res = await saveContact({
+            Email: data.email,
+            Firstname: data.firstname,
+            Lastname: data.lastname,
+            Phone: data.phone,
+            Company: data.company,
+            Notes: data.notes,
+            Role: data.role
+        })
+        console.log("Response", res)
+        if (res) {
+            setError("Error creation contact");
+        } else {
+            setError("");
+        }
+        setLoading(false);
     }
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
     return (
-        <form onSubmit={handleSubmit(onSubmit)} onReset={() => clearErrors()}
+    <>
+        <form
+            onSubmit={handleSubmit(onSubmit)} 
+            onReset={() => clearErrors()}
             className="py-6 px-8 bg-gray-900 rounded-2xl">
                 <h1 className="mb-4 text-2xl text-center font-bold">Add Contact</h1>
                 <div className="grid grid-cols-2 gap-6">
@@ -76,7 +100,7 @@ export function NewContactForm() {
                     <textarea {...register("notes")}
                         name="notes"
                         placeholder="Your notes... (optional)"
-                        className="w-full border rounded-sm p-2"
+                        className="w-full p-2 h-auto border rounded-sm min-h-[150px] max-h-[150px]"
                     >
                     </textarea>
                     {errors.notes && (
@@ -84,10 +108,11 @@ export function NewContactForm() {
                     )}
                     <div>
                         <button
+                            disabled={loading}
                             type="submit"
-                            className="w-3/4 py-2 bg-blue-400 text-xl font-bold hover:bg-blue-600"
+                            className={clsx("w-3/4 py-2 bg-blue-600 text-xl font-bold", !loading?"hover:bg-blue-700":"")} 
                         >
-                            Submit
+                            {loading?"Creating...":"Submit"}
                         </button>
                         <button 
                             type="reset"
@@ -96,7 +121,9 @@ export function NewContactForm() {
                             Clear form
                         </button>
                     </div>
+                    <p className="text-red-500 text-sm">{!loading && error}</p>
                 </div>
         </form>
+    </>
     )
 }
