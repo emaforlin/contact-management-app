@@ -7,7 +7,7 @@ export const ContactCard = ({contact}: {contact: Contact}) => {
             <h2 className="text-xl font-semibold text-gray-800">
                 {contact.Firstname} {contact.Lastname}
             </h2>
-            <p className="text-gray-600">{contact.Role || "No role specified"}</p>
+            <p className="text-gray-600">{contact.Role || "No role/position specified"}</p>
 
             <div className="mt-4">
                 <p className="text-sm text-gray-500">
@@ -16,7 +16,7 @@ export const ContactCard = ({contact}: {contact: Contact}) => {
                     </a>
                 </p>
                 <p className="text-sm text-gray-500">📞 {contact.Phone}</p>
-                {contact.Company && <p className="text-sm text-gray-500">🏢 {contact.Company}</p>}
+                {contact.Company && <p className="text-sm text-gray-500">🏢 {contact.Company || "No company provided"}</p>}
             </div>
 
             <div className="mt-4 p-3 min-h-30 bg-gray-100 rounded-md">
