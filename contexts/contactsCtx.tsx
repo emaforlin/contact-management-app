@@ -26,7 +26,6 @@ export const ContactsProvider = ({children}: {children: ReactNode}) => {
         try {
             await saveContact(contactData);
             await retrieveContacts();
-            alert("Contact information saved!");
         } catch (error) {
             setErrors("Couldn't save information. Try again Later.")
         } finally {
