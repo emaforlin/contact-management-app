@@ -2,7 +2,6 @@
 
 import { Contact } from "@/types/contact";
 import { DeleteItemCommand, DynamoDBClient, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
-import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({
     region: "us-east-1",
@@ -19,7 +18,7 @@ export const saveContact = async (contact: Contact): Promise<any> => {
 
     Object.entries(contact).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-        dynamoItem[key] = { S: value }; // Todos los valores son Strings en este caso
+        dynamoItem[key] = { S: value };
         }
     });
 
