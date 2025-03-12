@@ -124,7 +124,6 @@ export function NewContactForm() {
                         </button>
                     </div>
                     <p className="text-red-500 text-sm">{!loading && submitDone && ctxErrors}</p>
-                    {/* <p className="text-red-500 text-sm">{!loading && ctxErrors}</p> */}
                 </div>
         </form>
     </>

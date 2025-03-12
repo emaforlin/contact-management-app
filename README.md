@@ -51,4 +51,6 @@ To run the you'll need: AWS permissions and keys, and a DynamoDB table with `Ema
 
 3. To handle the database operations I'm sharing a unique instance of the *DynamoDBClient*, which is defined in */services*, and using it in my own wrapper functions. Then I call this functions from the appropriate component.
 
-4. Dockerization. In this case I choose a __multi-stage Dockerfile__ mainly because of the final __image size improvement__ (which in this case was __about 87%__), but it also adds security (for example, you decide which files and which not to maintain in the production package).
+4. I've defined a React Context to manage the Contacts states and the related functions, to avoid doing *prop drilling*.
+
+5. Dockerization. In this case I choose a __multi-stage Dockerfile__ mainly because of the final __image size improvement__ (which in this case was __about 87%__), but it also adds security (for example, you decide which files and which not to maintain in the production package).
