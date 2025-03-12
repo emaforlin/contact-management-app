@@ -51,30 +51,34 @@ export function NewContactForm() {
         handleSubmit,
         register, 
         formState: {errors},
-        clearErrors
+        clearErrors,
+        reset
     } = useForm<FormData>({
         resolver: zodResolver(formSchema)
     })
 
     const onSubmit = async (data: FormData) => {
-        setLoading(true);
-        const res = await saveContact({
-            Email: data.email,
-            Firstname: data.firstname,
-            Lastname: data.lastname,
-            Phone: data.phone,
-            Company: data.company,
-            Notes: data.notes,
-            Role: data.role
-        })
-        console.log("Response", res)
-        if (res) {
-            setError("Error creation contact");
-        } else {
+        try {
+            setLoading(true);
+            await saveContact({
+                Email: data.email,
+                Firstname: data.firstname,
+                Lastname: data.lastname,
+                Phone: data.phone,
+                Company: data.company,
+                Notes: data.notes,
+                Role: data.role
+            })
+            reset();
             setError("");
+            alert("Contact information saved!");
+        } catch (error) {
+            setError("Couldn't save information. Try again Later.")
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     }
+
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     return (

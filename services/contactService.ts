@@ -14,7 +14,6 @@ const client = new DynamoDBClient({
 
 
 export const saveContact = async (contact: Contact): Promise<any> => {
-    console.log("AAAAAAAAAAAAAAAAAAAAAa",process.env.TABLE_NAME)
     const dynamoItem: Record<string, any> = {};
 
     Object.entries(contact).forEach(([key, value]) => {
@@ -32,6 +31,7 @@ export const saveContact = async (contact: Contact): Promise<any> => {
 
     try {
         const res = await client.send(cmd);
+        return res;
     } catch (error) {
         console.log("error saving contact", error);
         throw new Error("Could not save contact");
