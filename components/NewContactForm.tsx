@@ -7,6 +7,7 @@ import InputField from "./InputField";
 import { saveContact } from "@/services/contactService";
 import { useState } from "react";
 import clsx from "clsx";
+import { useContactContext } from "@/contexts/contactsCtx";
 
 
 const formSchema = z.object({
@@ -56,11 +57,12 @@ export function NewContactForm() {
     } = useForm<FormData>({
         resolver: zodResolver(formSchema)
     })
+    const {loading, createNewContact, errors: ctxErrors, resetErrors: resetCtxErrors} = useContactContext();
 
     const onSubmit = async (data: FormData) => {
         try {
-            setLoading(true);
-            await saveContact({
+            resetCtxErrors();
+            await createNewContact({
                 Email: data.email,
                 Firstname: data.firstname,
                 Lastname: data.lastname,
@@ -69,18 +71,14 @@ export function NewContactForm() {
                 Notes: data.notes,
                 Role: data.role
             })
-            reset();
-            setError("");
             alert("Contact information saved!");
+            reset();
         } catch (error) {
-            setError("Couldn't save information. Try again Later.")
-        } finally {
-            setLoading(false);
+            console.log(ctxErrors, error);
         }
     }
 
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>("");
+
     return (
     <>
         <form
@@ -125,7 +123,7 @@ export function NewContactForm() {
                             Clear form
                         </button>
                     </div>
-                    <p className="text-red-500 text-sm">{!loading && error}</p>
+                    <p className="text-red-500 text-sm">{!loading && ctxErrors}</p>
                 </div>
         </form>
     </>
