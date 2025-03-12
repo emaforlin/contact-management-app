@@ -1,9 +1,10 @@
-import { StringValidation } from "zod";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FormType } from "./NewContactForm";
 
 type InputFieldProps = {
-    register: any;
-    errors: any;
-    name: string;
+    register: UseFormRegister<FormType>;
+    errors: FieldErrors<FormType>;
+    name: keyof FormType;
     type: string;
     placeholder: string;
 }
@@ -14,7 +15,7 @@ const InputField = ({ register, errors, name, type, placeholder }: InputFieldPro
             name={name}
             type={type}
             placeholder={placeholder}
-            className="border rounded-sm p-2"
+            className="border border-gray-200 rounded-sm p-2 bg-slate-50"
         />
         {errors[name] && (
             <p className="text-red-500 text-sm">{errors[name].message}</p>

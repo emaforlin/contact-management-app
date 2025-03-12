@@ -2,8 +2,7 @@
 
 import { ContactCard } from "@/components/ContactCard";
 import { useContactContext } from "@/contexts/contactsCtx";
-import { Contact } from "@/types/contact";
-import { useEffect, useState } from "react"
+import "../globals.css";
 
 
 
@@ -11,7 +10,7 @@ export default function Contacts() {
     const { loading, contacts } = useContactContext();
 
     return (
-         <div className="min-h-screen bg-gray-100 p-6">
+         <div className="min-h-screen p-6">
             <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
                 Contact List
             </h1>

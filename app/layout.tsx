@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <nav className="bg-white shadow-md">
+        <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
             <div className="max-w-6xl mx-auto px-4">
                 <div className="flex justify-between items-center py-4">
                     <Link href="/" className="text-xl font-bold text-gray-800 hover:text-blue-600">

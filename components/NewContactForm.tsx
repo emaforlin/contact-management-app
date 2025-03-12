@@ -4,8 +4,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "./InputField";
-import { saveContact } from "@/services/contactService";
-import { useState } from "react";
 import clsx from "clsx";
 import { useContactContext } from "@/contexts/contactsCtx";
 
@@ -45,7 +43,7 @@ const formSchema = z.object({
     role: true
 });
 
-type FormData = z.infer<typeof formSchema>;
+export type FormType = z.infer<typeof formSchema>;
 
 export function NewContactForm() {
     const {
@@ -54,12 +52,13 @@ export function NewContactForm() {
         formState: {errors},
         clearErrors,
         reset
-    } = useForm<FormData>({
+    } = useForm<FormType>({
         resolver: zodResolver(formSchema)
     })
+
     const {loading, createNewContact, errors: ctxErrors, resetErrors: resetCtxErrors} = useContactContext();
 
-    const onSubmit = async (data: FormData) => {
+    const onSubmit = async (data: FormType) => {
         try {
             resetCtxErrors();
             await createNewContact({
@@ -78,14 +77,13 @@ export function NewContactForm() {
         }
     }
 
-
     return (
     <>
         <form
             onSubmit={handleSubmit(onSubmit)} 
             onReset={() => clearErrors()}
-            className="py-6 px-8 bg-gray-900 rounded-2xl">
-                <h1 className="mb-4 text-2xl text-center font-bold">Add Contact</h1>
+            className="py-6 px-8 bg-white rounded-2xl border border-gray-200">
+                <h1 className="mb-4 text-2xl text-center font-bold text-gray-800">Add Contact</h1>
                 <div className="grid grid-cols-2 gap-6">
                     <div className="flex flex-col gap-4">
                         <InputField register={register} errors={errors} name="firstname" placeholder="Firstname" type="text"/>
@@ -102,7 +100,7 @@ export function NewContactForm() {
                     <textarea {...register("notes")}
                         name="notes"
                         placeholder="Your notes... (optional)"
-                        className="w-full p-2 h-auto border rounded-sm min-h-[150px] max-h-[150px]"
+                        className="w-full bg-slate-50 p-2 h-auto border border-gray-200 rounded-sm min-h-[150px] max-h-[150px]"
                     >
                     </textarea>
                     {errors.notes && (
@@ -112,13 +110,13 @@ export function NewContactForm() {
                         <button
                             disabled={loading}
                             type="submit"
-                            className={clsx("w-3/4 py-2 bg-blue-600 text-xl font-bold", !loading?"hover:bg-blue-700":"")} 
+                            className={clsx("w-3/4 py-2 bg-blue-500 text-xl text-white", !loading?"hover:bg-blue-600":"")} 
                         >
                             {loading?"Creating...":"Submit"}
                         </button>
                         <button 
                             type="reset"
-                            className="w-1/4 py-2 hover:font-bold"
+                            className="w-1/4 py-2 hover:font-medium"
                         >
                             Clear form
                         </button>

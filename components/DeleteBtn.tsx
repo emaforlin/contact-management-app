@@ -7,7 +7,8 @@ export const DeleteBtn = ({className, data}: { className?: string, data: Contact
     const handleClick = async () => {
         try {
             await deleteContact(data);
-        } catch (error) {
+        } catch (error: unknown) {
+            console.log(errors, error);
             alert(errors);
         }
     }
