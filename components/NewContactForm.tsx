@@ -57,9 +57,11 @@ export function NewContactForm() {
     })
 
     const {loading, createNewContact, errors: ctxErrors, resetErrors: resetCtxErrors} = useContactContext();
-
+    
+    let submitDone = false;
     const onSubmit = async (data: FormType) => {
         try {
+            submitDone = true;
             resetCtxErrors();
             await createNewContact({
                 Email: data.email,
@@ -76,7 +78,6 @@ export function NewContactForm() {
             console.log(ctxErrors, error);
         }
     }
-
     return (
     <>
         <form
@@ -122,7 +123,8 @@ export function NewContactForm() {
                             Clear form
                         </button>
                     </div>
-                    <p className="text-red-500 text-sm">{!loading && ctxErrors}</p>
+                    <p className="text-red-500 text-sm">{!loading && submitDone && ctxErrors}</p>
+                    {/* <p className="text-red-500 text-sm">{!loading && ctxErrors}</p> */}
                 </div>
         </form>
     </>
