@@ -82,18 +82,19 @@ export function NewContactForm() {
         <form
             onSubmit={handleSubmit(onSubmit)} 
             onReset={() => clearErrors()}
-            className="py-6 px-8 bg-white rounded-2xl border border-gray-200">
+            className="py-6 px-8 bg-white rounded-2xl border border-gray-200"
+        >
                 <h1 className="mb-4 text-2xl text-center font-bold text-gray-800">Add Contact</h1>
                 <div className="grid grid-cols-2 gap-6">
                     <div className="flex flex-col gap-4">
-                        <InputField register={register} errors={errors} name="firstname" placeholder="Firstname" type="text"/>
-                        <InputField register={register} errors={errors} name="email" placeholder="Email" type="text"/>
-                        <InputField register={register} errors={errors} name="company" placeholder="Company (optional)" type="text"/>
+                        <InputField disabled={loading} register={register} errors={errors} name="firstname" placeholder="Firstname" type="text"/>
+                        <InputField disabled={loading} register={register} errors={errors} name="email" placeholder="Email" type="text"/>
+                        <InputField disabled={loading} register={register} errors={errors} name="company" placeholder="Company (optional)" type="text"/>
                     </div>
                     <div className="flex flex-col gap-4">
-                        <InputField register={register} errors={errors} name="lastname" placeholder="Lastname" type="text"/>
-                        <InputField register={register} errors={errors} name="phone" placeholder="Phone number" type="tel"/>
-                        <InputField register={register} errors={errors} name="role" placeholder="Role/Position (optional)" type="text"/>
+                        <InputField disabled={loading} register={register} errors={errors} name="lastname" placeholder="Lastname" type="text"/>
+                        <InputField disabled={loading} register={register} errors={errors} name="phone" placeholder="Phone number" type="tel"/>
+                        <InputField disabled={loading} register={register} errors={errors} name="role" placeholder="Role/Position (optional)" type="text"/>
                     </div>
                 </div>
                 <div className="mt-4 flex flex-col gap-4">
