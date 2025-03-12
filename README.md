@@ -2,7 +2,9 @@
 
 ## Requirements
 
-To run the you'll need: AWS permissions and keys, and a DynamoDB table with `Email(S): PartitionKey` and `Lastname(S): SortKey`
+To run the you'll need: AWS permissions and keys, and a DynamoDB table with `Email(S): PartitionKey` and `Lastname(S): SortKey`.
+
+>     Exporting the AWS secrets is mandatory when running outside the AWS cloud.
 
 ## Setup
 
@@ -12,7 +14,7 @@ To run the you'll need: AWS permissions and keys, and a DynamoDB table with `Ema
 
 2. Then move inside the project folder and install dependencies `cd ./contact-management-app && npm install`
 
-3. Run the app
+3. Run the app 
     * To run the development server (hot reload enabled): `npm run dev`
     * Or you can build the production ready app instead with: `npm run build`. To start the server use `npm start`
 
@@ -20,9 +22,17 @@ To run the you'll need: AWS permissions and keys, and a DynamoDB table with `Ema
 
 1. Build the image`docker build -t contact-management-app .`
 
-2. Run `docker -p<your_port>:3000 run contact-management-app`
+2. Run <code>docker -p <your_port>:3000 \
+  -e TABLE_NAME=<your_table> \
+  -e AWS_ACCESS_KEY_ID=<access_key> \
+  -e AWS_SECRET_ACCESS_KEY=<secret_key> 
+  -e AWS_SESSION_TOKEN=<session_token> \
+  run contact-management-app</code>
+ 
+>     If the container is running on the AWS cloud, the secrets aren't mandatories.
 
 3. Access to `http://localhost:<your_port>`
+
 
 
 ## Features
